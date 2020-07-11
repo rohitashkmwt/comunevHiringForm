@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hiring Form</title>
+    <style>
+        body {
+            width: auto;
+            margin-left: 24px auto;
+            background-color: azure;
+            font-family: Tahoma, Arial, sans-serif
+        }
+        
+        #heading {
+            text-align: center;
+            color: #0ff
+        }
+        
+        fieldset {
+            width: 70% auto;
+            align-self: center;
+            padding: 8px 20px;
+            background-color: #f0f8ff;
+            margin-bottom: 20px auto;
+            margin: 30px auto
+        }
+        
+        fieldset label {
+            display: inline-block;
+            width: 140px;
+            margin-top: 4px;
+            margin-bottom: 4px
+        }
+        
+        #gender {
+            padding: 2px;
+            margin-left: 5px
+        }
+        
+        input[type=email],
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box
+        }
+        
+        select {
+            padding: 6px 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box
+        }
+        
+        input[type=file] {
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #cce6ff;
+            color: #fff;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            display: inline-block;
+            border-radius: 4px;
+            cursor: pointer;
+            border-radius: 2px;
+            box-sizing: border-box;
+        }
+        
+        input[type=button] {
+            width: 100%;
+            background-color: #42b5d8;
+            color: #fff;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer
+        }
+        
+        input[type=submit]:hover {
+            background-color: #549ebb
+        }
+        
+        div {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        
+        .fa {
+            margin-left: -12px;
+            margin-right: 8px;
+        }
+        
+        .submitbtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            display: none;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+        
+        .alert.success {
+            background-color: green;
+        }
+        
+        .mandatory label:after {
+            content: "*";
+            color: red;
+            text-size-adjust: 1px;
+        }
+        
+        .fhead {
+            text-align: center;
+            color: rgb(255, 255, 255);
+            background-color: #7ed4e6;
+            font-weight: bolder;
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+        
+        .fail {
+            background-color: #f44336;
+        }
+        
+        .dospNone {
+            display: none;
+            margin-top: -5px;
+            color: red;
+            font-size: smaller;
+        }
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="alert success" id="sucsMsg">
+            <span onclick="closeAlertBox()" class="submitbtn">&times;</span>
+            <strong>Success!</strong> Your Form is submitted successfully. <b>Thank You</b> for applying. <b>Best of Luck.</b>
+        </div>
+
+        <div class="alert fail alertbox" id="errMsg">
+            <span onclick="closeAlertBox()" class="submitbtn">&times;</span>
+            <strong>Something went wrong.</strong><b>Please Try again.</b>
+        </div>
+
+
+        <div class="mandatory">
+            <form>
+                <fieldset>
+                    <legend class="fhead">Please Fill The Following</legend><br>
+                    <label for="firstName">Name</label>
+                    <select id="salutation" aria-placeholder="Select">
+                        <option label="Select"></option>
+                        <option label="Mr." value="Mr."></option>
+                        <option label="Ms." value="Ms."></option>
+                        <option label="Mrs." value="Mrs."></option>
+                    </select>
+                    <input type="text" id="firstName" name="firstName" placeholder="First Name">
+                    <p class="dospNone" id="errFName">First Name is required.</p>
+                    <input type="text" name="lastName" id="lastName" placeholder="Last Name">
+                    <p class="dospNone" id="errLName">Last Name is required.</p>
+
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" aria-placeholder="Gender">
+                        <option label="Gender"></option>
+                        <option label="Male" value="Male"></option>
+                        <option label="Female" value="Female"></option>
+                        <option label="Other" value="Other"></option>
+                    </select>
+                    <p id="errGender" class="dospNone">Gender is required.</p>
+
+                    <label for="mail">E-mail</label>
+                    <input type="email" name="mail" id="mail" required placeholder="E-mail">
+                    <p id="errEmail" class="dospNone">Email is required.</p>
+
+                    <label for="resume">Resume</label>
+                    <input type="file" name="resume" id="resume" required placeholder="PDF, JPG, JPEG only">
+                    <p id="errResume" class="dospNone">Resume is required.</p>
+
+                    <label for="position">Position Applied</label>
+                    <input type="text" name="position" id="position" required placeholder="Position Applied">
+                    <p id="errPosition" class="dospNone">Position is required.</p>
+
+                    <label for="qualification">Highest Qualification</label>
+                    <input type="text" id="qualification" name="qualification" placeholder="Highest Qualification">
+                    <p id="errQualification" class="dospNone">Qualification is required.</p>
+
+                    <input type="button" name="submit" onclick="submitForm()" value="Submit">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <script>
+        function closeAlertBox() {
+            document.getElementById("sucsMsg").style.display = "none";
+        }
+
+        function valueById(id) {
+            return document.getElementById(id).value;
+        }
+        var input = document.querySelector('input[type=file]');
+
+        function asionPost(data) {
+            axios({
+                method: 'post',
+                url: "http://localhost:8080/api/contacts",
+                data: data
+            }).then((response) => {
+                document.getElementById("sucsMsg").style.display = "block";
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });;
+        }
+
+        function setDisplayProperty(id, property) {
+            console.log(id, property);
+            document.getElementById(id).style.display = property;
+        }
+
+        function submitForm() {
+            let formData = {
+                'salutation': valueById('salutation'),
+                'firstName': valueById('firstName'),
+                'lastName': valueById('lastName'),
+                'gender': valueById('gender'),
+                'mail': valueById('mail'),
+                'resume': valueById('resume'),
+                'position': valueById('position'),
+                'qualification': valueById('qualification'),
+            }
+            let requiredFiledEmpty = false;
+            if (formData.firstName.trim() == "") {
+                setDisplayProperty('errFName', 'block');
+                requiredFiledEmpty = true;
+            } else {
+                setDisplayProperty('errFName', 'none');
+            }
+            if (formData.lastName.trim() == "") {
+                setDisplayProperty('errLName', 'block');
+                requiredFiledEmpty = true;
+            } else {
+                setDisplayProperty('errLName', 'none');
+            }
+            if (formData.gender.trim() == "") {
+                setDisplayProperty('errGender', 'block');
+                requiredFiledEmpty = true;
+
+            } else {
+                setDisplayProperty('errGender', 'none');
+            }
+            if (formData.mail.trim() == "") {
+                setDisplayProperty('errEmail', 'block');
+                requiredFiledEmpty = true;
+
+            } else {
+                setDisplayProperty('errEmail', 'none');
+            }
+            if (formData.resume.trim() == "") {
+                setDisplayProperty('errResume', 'block');
+                requiredFiledEmpty = true;
+
+            } else {
+                setDisplayProperty('errResume', 'none');
+            }
+            if (formData.position.trim() == "") {
+                setDisplayProperty('errPosition', 'block');
+                requiredFiledEmpty = true;
+
+            } else {
+                setDisplayProperty('errPosition', 'none');
+            }
+            if (formData.qualification.trim() == "") {
+                setDisplayProperty('errQualification', 'block');
+                requiredFiledEmpty = true;
+
+            } else {
+                setDisplayProperty('errQualification', 'none');
+            }
+            if (!requiredFiledEmpty) {
+                asionPost(formData);
+            }
+        }
+    </script>
+</body>
+
+</html>
